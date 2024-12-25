@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Book Listing</title>
+    <style>
+        
+        body {
+
+            
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        .search-container {
+            margin-bottom: 20px;
+        }
+        #bookTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        #bookTable, th, td {
+            border: 1px solid #a82525;
+            padding: 10px;
+        }
+        th {
+            background-color: #b1b9b8;
+            color: #333;
+        }
+        td {
+            text-align: left;
+        }
+        #noResults {
+            display: none;
+            color: red;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body style="background-color:rgb(249, 254, 238);" >
+
+    <center><img src="kiet1.png" alt="kiet logo" width="400" height="130"></center>
+    
+        <h1 align="center">Library Book Listing</h1>
+        <p>Search for books by title or author.</p>
+    
+
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search books..." onkeyup="searchBooks()">
+        <p id="noResults">No books found.</p>
+    </div>
+    <div class="search-container">
+        
+        <select id="shelfFilter" onchange="filterByShelf()">
+            <option value="">All Shelves</option>
+            <option value="24">Shelf 24</option>
+            <option value="41">Shelf 41</option>
+            <option value="52">Shelf 52</option>
+            <option value="63">Shelf 63</option>
+            <option value="84">Shelf 84</option>
+            <option value="85">Shelf 85</option>
+        </select>
+        <p id="noResults">No books found.</p>
+    </div>
+    
+
+    <table id="bookTable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Description</th>
+                <th>Shelf no.</th>
+            </tr>
+        </thead>
+        <tbody id="bookList">
+            <tr>
+                <td>The Great Gatsby</td>
+                <td>F. Scott Fitzgerald</td>
+                <td>A classic novel set in the Jazz Age, exploring themes of wealth and excess.</td>
+                <td>52</td>
+            </tr>
+            <tr>
+                <td>To Kill a Mockingbird</td>
+                <td>Harper Lee</td>
+                <td>A story of racial injustice in the Deep South, seen through the eyes of a young girl.</td>
+                <td>85</td>
+
+            </tr>
+            <tr>
+                <td>1984</td>
+                <td>George Orwell</td>
+                <td>A dystopian novel that delves into the dangers of totalitarianism.</td>
+                <td>63</td>
+
+            </tr>
+            <tr>
+                <td>Pride and Prejudice</td>
+                <td>Jane Austen</td>
+                <td>A romantic novel that critiques the British class system.</td>
+                <td>24</td>
+
+            </tr>
+            <tr>
+                <td>The Hobbit</td>
+                <td>J.R.R. Tolkien</td>
+                <td>A fantasy adventure featuring Bilbo Baggins and his journey to reclaim a lost treasure.</td>
+                <td>41</td>
+
+            </tr>
+            <tr>
+                <td>Calculus for Engineers</td>
+                <td>H. Kotze</td>
+                <td>Calculus is a branch of mathematics that is used by engineers to solve problems</td>
+                <td>84</td>
+
+            </tr>
+            <tr>
+                <td>Let Us C</td>
+                <td>Yashavant Kanetkar </td>
+                <td>A romantic novel that critiques the British class system.</td>
+                <td>24</td>
+
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        
+        function searchBooks() {
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let shelfFilter = document.getElementById("shelfFilter").value;
+    let rows = document.getElementById("bookList").getElementsByTagName("tr");
+    let noResults = document.getElementById("noResults");
+    let found = false;
+
+    for (let i = 0; i < rows.length; i++) {
+        let title = rows[i].getElementsByTagName("td")[0].textContent.toLowerCase();
+        let author = rows[i].getElementsByTagName("td")[1].textContent.toLowerCase();
+        let shelf = rows[i].getElementsByTagName("td")[3].textContent;
+
+        if ((title.includes(input) || author.includes(input)) && 
+            (shelfFilter === "" || shelf === shelfFilter)) {
+            rows[i].style.display = "";
+            found = true;
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+
+    noResults.style.display = found ? "none" : "block";
+}
+
+        function filterByShelf() {
+    let shelfFilter = document.getElementById("shelfFilter").value;
+    let rows = document.getElementById("bookList").getElementsByTagName("tr");
+    let noResults = document.getElementById("noResults");
+    let found = false;
+
+    for (let i = 0; i < rows.length; i++) {
+        let shelf = rows[i].getElementsByTagName("td")[3].textContent;
+        if (shelfFilter === "" || shelf === shelfFilter) {
+            rows[i].style.display = "";
+            found = true;
+        } else {
+            rows[i].style.display = "none";
+        }
+    }
+
+    noResults.style.display = found ? "none" : "block";
+}
+
+    </script>
+</body>
+</html>
